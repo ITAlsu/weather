@@ -2,23 +2,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { CitiesComponent } from './cities/cities.component';
-import { PeriodComponent } from './period/period.component';
 import { WeatherGridComponent } from './weather-grid/weather-grid.component';
 import { SearchHistoryComponent } from './search-history/search-history.component';
 import { FormsModule } from '@angular/forms';
+import { SearchCityComponent } from './search-city/search-city.component';
+import { WeatherItemComponent } from './weather-item/weather-item.component';
+import { SearchPeriodComponent } from './search-period/search-period.component';
+import { HttpClientModule }    from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CitiesComponent,
-    PeriodComponent,
     WeatherGridComponent,
-    SearchHistoryComponent
+    SearchHistoryComponent,
+    SearchCityComponent,
+    WeatherItemComponent,
+    SearchPeriodComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

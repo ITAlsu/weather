@@ -12,4 +12,5 @@ export class SearchHistoryComponent implements OnInit {
   ngOnInit() {
   }
 
+  
 }

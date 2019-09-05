@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { WeatherItem } from '../weather-item/weather-item';
+import { WeatherService } from '../services/weather.service';
 
 @Component({
   selector: 'app-weather-grid',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./weather-grid.component.css']
 })
 export class WeatherGridComponent implements OnInit {
+  weatherItems: WeatherItem[];
 
-  constructor() { }
+  constructor(private _weatherService: WeatherService) { }
 
   ngOnInit() {
+    this.weatherItems = this._weatherService.getWeatherItems();
   }
 
 }

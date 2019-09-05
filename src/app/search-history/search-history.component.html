@@ -1,1 +1,8 @@
 <p>search-history works!</p>
+
+<div id="search-component">
+    <h4><label for="search-box">Search the city</label></h4>
+  
+    <input #searchBox id="search-box" (input)="search(searchBox.value)" />
+  
+</div>
