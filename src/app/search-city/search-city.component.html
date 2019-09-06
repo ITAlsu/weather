@@ -1,4 +1,21 @@
 <div>
-    <input type="text" placeholder="Enter the city..." #searchBox id="search-box">  <!--(input)="onSearch(searchBox.value)"-->
-    <button (click)= "onSearch(searchBox.value)">Search</button>
+    <input type="text" placeholder="Enter the city..." #searchBox id="search-box" (input)="onSearchCity(searchBox.value)">
+    <div *ngIf="items">
+        <div>city: {{items?.city.name}}</div>
+        <div>country: {{items?.city.country}}</div>
+        <div>icon : {{items?.list[0].weather[0].icon}}</div>
+        <div>temp : {{items?.list[0].main.temp}}</div>
+    </div>
+    <ul>
+        <li><button class="navbar-toggler" (click)= "onSearch(searchBox.value,1)">Today</button></li>
+        <li><button (click)= "onSearch(searchBox.value,5)">5 days</button></li>
+    </ul>
+    <div>
+        <div *ngFor = "let day of items?.list">
+            <div>icon : {{day.weather[0].icon}}</div>
+            <img src="http://openweathermap.org/img/wn/{{day.weather[0].icon}}@2x.png" width="50" height="50">
+            <div>temp : {{day.main.temp_max}}</div>
+            <div>temp : {{day.main.temp_min}}</div>
+        </div>
+    </div>
 </div>

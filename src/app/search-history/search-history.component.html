@@ -1,8 +1,8 @@
-<p>search-history works!</p>
+<p>Search history:</p>
 
-<div id="search-component">
-    <h4><label for="search-box">Search the city</label></h4>
-  
-    <input #searchBox id="search-box" (input)="search(searchBox.value)" />
-  
-</div>
+<ul>
+    <li *ngFor = 'let item of searchHistoryItems' (click)="doIt()" >
+        <div>city: {{item.city}}</div>
+        <div>days: {{item.days}}</div>
+    </li>
+</ul>
