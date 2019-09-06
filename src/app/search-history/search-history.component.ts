@@ -16,7 +16,11 @@ export class SearchHistoryComponent implements OnInit {
   }
   
   doIt(){
-    console.log('wooooorks');
+    console.log('update the list of history after search');
+  }
+
+  deleteHistoryItem(){
+    
   }
   
   
