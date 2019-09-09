@@ -7,32 +7,31 @@ import { Subject } from 'rxjs';
 })
 export class WeatherHistoryService {
   MAX_HISTORY = 3;
-  searchSubject : Subject<SearchItem> = new Subject<SearchItem>();
+  searchSubject: Subject<SearchItem> = new Subject<SearchItem>();
   constructor() { }
 
-  addSearchHistoryItem(searchItem: SearchItem){
-    let historyItems = this.getSearchHistoryItems()? this.getSearchHistoryItems(): [];
+  addSearchHistoryItem(searchItem: SearchItem) {
+    const historyItems = this.getSearchHistoryItems() ? this.getSearchHistoryItems(): [];
 
     historyItems.push(searchItem);
-    if (historyItems.length > this.MAX_HISTORY) 
-    {
+    if (historyItems.length > this.MAX_HISTORY) {
        historyItems.shift();
     }
-    localStorage.setItem("historyItems", JSON.stringify(historyItems));
+    localStorage.setItem('historyItems', JSON.stringify(historyItems));
     this.searchSubject.next(searchItem);
   }
 
   getSearchHistoryItems(): SearchItem[] {
-    return JSON.parse(localStorage.getItem("historyItems"));
+    return JSON.parse(localStorage.getItem('historyItems'));
   }
 
   deleteSearchHistoryItem(id: number): void {
-    let historyItems = this.getSearchHistoryItems();
-    var index = historyItems.map(x => {
+    const historyItems = this.getSearchHistoryItems();
+    const index = historyItems.map(x => {
       return x.id;
     }).indexOf(id);
 
     historyItems.splice(index, 1);
-    localStorage.setItem("historyItems", JSON.stringify(historyItems));
+    localStorage.setItem('historyItems', JSON.stringify(historyItems));
   }
 }

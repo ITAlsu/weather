@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { WeatherService } from '../services/weather.service';
 import { WeatherItem } from '../models/weather-item/weather-item';
 
 @Component({
@@ -19,13 +18,13 @@ export class SearchCityComponent implements OnInit {
   }
 
   onSearchCity(cityName: string) {
-     this.searchedCity.emit(cityName);
-     this.checkToday = true;
+    this.checkToday = true;
+    this.searchedCity.emit(cityName);
   }
 
   onSearchDays(cityName: string, days: number) {
+    if (days !== 1) { this.checkToday = false; }
     this.searchedDays.emit({cityName, days});
-    if (days !=1) this.checkToday = false;
   }
 
 }

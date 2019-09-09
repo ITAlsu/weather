@@ -12,7 +12,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 export class WeatherComponent implements OnInit {
   weatherItems: WeatherItem[] = [];
-  cityName:string ='';
+  cityName: string = '';
   private searchTerms = new Subject<string>();
   constructor(private _weatherService: WeatherService) { }
 
@@ -25,11 +25,8 @@ export class WeatherComponent implements OnInit {
     ).subscribe(
       data => {
         return this.weatherItems = data;
-    },
-    error => {
-      console.warn(error);
-      this.weatherItems =[];
-    }
+      }
+      // no error handling (it is handled on this._weatherService.getWeatherItemsByCityName(term)))
     );
   }
 
@@ -38,16 +35,15 @@ export class WeatherComponent implements OnInit {
   }
 
   onSearchedDays(info: {cityName: string, days: number}) {
-     if (info.cityName !="") {
+     if (info.cityName !== '') {
       this._weatherService.getWeatherItemsByCityName(info.cityName, info.days).subscribe(
         data => {
           return this.weatherItems = data;
-      },
-      error => {
-        console.warn(error);
-        this.weatherItems =[];
-      }
+        }
+        // no error handling (it is handled on this._weatherService.getWeatherItemsByCityName(term)))
       );
     }
   }
+
+
 }
