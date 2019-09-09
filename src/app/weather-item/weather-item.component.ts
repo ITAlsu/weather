@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { WeatherItem } from './weather-item';
+import { WeatherItem} from '../models/weather-item';
+import { WeatherData } from '../models/weather-data';
 
 @Component({
   selector: 'app-weather-item',
@@ -7,18 +8,7 @@ import { WeatherItem } from './weather-item';
   styleUrls: ['./weather-item.component.css']
 })
 export class WeatherItemComponent implements OnInit {
-  @Input() weatherItem: WeatherItem;
-  // weatherItem: WeatherItem = {
-  //   cityName: "Shuzenji",
-  //   id: 1851632,
-  //   country: "JP",
-  //   temper: 15,
-  //   icon:  "02d"
-  // };
-
-  constructor() {
-    //this.weatherItem = new WeatherItem("Shuzenji", 1851632, "JP", 15, "01n" );
-  }
+  @Input() weatherItem: WeatherData;
 
   ngOnInit() {
 

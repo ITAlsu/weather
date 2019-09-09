@@ -1,17 +1,9 @@
 <p>Search history:</p>
 
-<ul>
-    <li *ngFor = 'let item of searchHistoryItems' (click)="doIt()" >
-        <div>city: {{item.city}}</div>
-        <div>days: {{item.days}}</div>
-    </li>
-</ul>
-
 <ul class="list-group">
     <li class="list-group-item d-flex justify-content-between align-items-center"
         *ngFor = 'let item of searchHistoryItems'>
         {{item.city}} {{item.days==1?'today':item.days+' days'}}
-        <span class="badge badge-primary badge-pill" (click)="doIt()">X</span>
+        <span class="badge badge-primary badge-pill" (click)="deleteSearchHistoryItem(item.id)">X</span>
     </li>
-
 </ul>

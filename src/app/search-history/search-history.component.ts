@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { SearchItem } from '../models/search-item';
+import { WeatherHistoryService } from '../services/weather-history.service';
+import { Subscription } from 'rxjs';
 import { WeatherService } from '../services/weather.service';
-import { SearchItem } from './searchItem';
 
 @Component({
   selector: 'app-search-history',
@@ -9,19 +11,26 @@ import { SearchItem } from './searchItem';
 })
 export class SearchHistoryComponent implements OnInit {
   searchHistoryItems : SearchItem[];
-  constructor(private _weatherService: WeatherService) { }
+  searchHistoryItem : SearchItem;
+  constructor(private _weatherHistoryService: WeatherHistoryService) { }
 
   ngOnInit() {
-    this.searchHistoryItems = this._weatherService.getSearchHistoryItems();
+    this._weatherHistoryService.searchSubject.subscribe(data => {
+      this.getSearchHistoryItems();
+      return this.searchHistoryItem = data;
+      },
+      error => console.warn(error)
+      );
+    this.getSearchHistoryItems();
   }
   
-  doIt(){
-    console.log('update the list of history after search');
+  getSearchHistoryItems(){
+    this.searchHistoryItems = this._weatherHistoryService.getSearchHistoryItems();
   }
 
-  deleteHistoryItem(){
-    
+  deleteSearchHistoryItem(id: number){
+    this._weatherHistoryService.deleteSearchHistoryItem(id);
+    this.getSearchHistoryItems();
   }
-  
   
 }

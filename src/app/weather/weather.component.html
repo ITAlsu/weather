@@ -1,0 +1,7 @@
+<app-search-city (searchedCity)="onSearchedCity($event)" (searchedDays)="onSearchedDays($event)"></app-search-city>
+<div *ngIf="weatherItems !== undefined && weatherItems.length != 0">
+    <div>city: {{weatherItems.cityName}}</div>
+    <div>country: {{weatherItems.country}}</div>
+</div>
+<app-weather-item *ngFor="let weatherItem of weatherItems.weaterData" [weatherItem] = "weatherItem"></app-weather-item>
+

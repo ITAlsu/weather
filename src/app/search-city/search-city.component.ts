@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { WeatherService } from '../services/weather.service';
-import { WeatherItem } from '../weather-item/weather-item';
-import { Subject, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { WeatherItem } from '../models/weather-item';
 
 @Component({
   selector: 'app-search-city',
@@ -10,43 +8,20 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
   styleUrls: ['./search-city.component.css']
 })
 export class SearchCityComponent implements OnInit {
-  items:any[];
-  weatherItems$: Observable<WeatherItem[]>;
-  private searchTerms = new Subject<string>();
-  daysCount: number;
+  weatherItems: WeatherItem[];
+  @Output() searchedCity = new EventEmitter<string>();
+  @Output() searchedDays = new EventEmitter<any>();
 
-  constructor(private _weatherService: WeatherService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.searchTerms
-    .pipe(
-      debounceTime(1000),
-      distinctUntilChanged(),
-      switchMap((term: string) => this._weatherService.getWeatherItemsByCityName(term)),
-    ).subscribe(
-      data => {
-        return this.items = data;
-    },
-    error => console.warn(error)
-    );
-
   }
 
   onSearchCity(cityName: string) {
-    this.searchTerms.next(cityName);
+      this.searchedCity.emit(cityName);
   }
 
-  onSearch(cityName: string, daysCount) {
-    this.daysCount = daysCount;
-    if (cityName !="") {
-      this._weatherService.getWeatherItemsByCityName(cityName, daysCount).subscribe(
-        data => {
-          return this.items = data;
-      },
-      error => console.warn(error)
-      );
-    }
-
+  onSearchDays(cityName: string, days: number) {
+    this.searchedDays.emit({cityName, days});
   }
-
 }
