@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchItem } from '../models/search-item';
+import { SearchItem } from '../models/search-item/search-item';
 import { WeatherHistoryService } from '../services/weather-history.service';
 import { Subscription } from 'rxjs';
 import { WeatherService } from '../services/weather.service';

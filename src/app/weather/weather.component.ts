@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WeatherItem } from '../models/weather-item';
+import { WeatherItem } from '../models/weather-item/weather-item';
 import { WeatherService } from '../services/weather.service';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -26,7 +26,10 @@ export class WeatherComponent implements OnInit {
       data => {
         return this.weatherItems = data;
     },
-    error => console.warn(error)
+    error => {
+      console.warn(error);
+      this.weatherItems =[];
+    }
     );
   }
 
@@ -40,7 +43,10 @@ export class WeatherComponent implements OnInit {
         data => {
           return this.weatherItems = data;
       },
-      error => console.warn(error)
+      error => {
+        console.warn(error);
+        this.weatherItems =[];
+      }
       );
     }
   }

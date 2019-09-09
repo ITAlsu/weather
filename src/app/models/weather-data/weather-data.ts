@@ -1,4 +1,6 @@
-export class WeatherData {
+import { IWeatherData } from './iweater-data';
+
+export class WeatherData implements IWeatherData{
     temperMin: number;
     temperMax: number;
     icon: string;

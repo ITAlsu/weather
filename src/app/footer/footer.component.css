@@ -1,0 +1,24 @@
+.page-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #464547;
+    text-align: center;
+    color: #bbb;
+    height: 25px;
+    z-index: 1;
+  }
+  
+  .page-footer__block {
+    height: 25px;
+  }
+  
+  .page-footer__link {
+    color: #a3c644;
+    text-decoration: none;
+  }
+  
+  .page-footer__link:hover {
+    text-decoration: underline;
+  }

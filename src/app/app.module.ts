@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { SearchCityComponent } from './search-city/search-city.component';
 import { WeatherItemComponent } from './weather-item/weather-item.component';
 import { HttpClientModule }    from '@angular/common/http';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { HttpClientModule }    from '@angular/common/http';
     WeatherComponent,
     SearchHistoryComponent,
     SearchCityComponent,
-    WeatherItemComponent
+    WeatherItemComponent,
+    FooterComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

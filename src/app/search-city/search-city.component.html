@@ -1,8 +1,18 @@
-<div>
-    <input type="text" placeholder="Enter the city..." #searchBox id="search-box" (input)="onSearchCity(searchBox.value)">
-    
-    <div>
-        <button class="btn" (click)= "onSearchDays(searchBox.value,1)" [disabled] = "searchBox.value ==''">TODAY</button>
-        <button class="btn" (click)= "onSearchDays(searchBox.value,5)" [disabled] = "searchBox.value ==''">5 DAYS</button>
-    </div>
+
+<div class="logic-block">
+    <label for="inputSearch">Search the city</label>
+    <input type="text" class="form-control" id="inputSearch" aria-describedby="cityFound" placeholder="Enter the city here"
+        #searchBox id="search-box" (input)="onSearchCity(searchBox.value); ">
+</div>
+
+<div class="btn-group btn-group-toggle btn-group-justified logic-block" data-toggle="buttons">
+    <label class="btn btn-secondary" [ngClass]="{'active' : checkToday}" (click)= "onSearchDays(searchBox.value, 1)">
+        <input type="radio" name="options" id="option1" (click)= "onSearchDays(searchBox.value,1)">TODAY
+    </label>
+    <label class="btn btn-secondary" [ngClass]="{'active' : !checkToday}"  (click)= "onSearchDays(searchBox.value,3)">
+        <input type="radio" name="options" id="option2" >3 DAYS
+    </label>
+    <label class="btn btn-secondary" [ngClass]="{'active' : !checkToday}" (click)= "onSearchDays(searchBox.value,5)">
+        <input type="radio" name="options" id="option3" >5 DAYS
+    </label>
 </div>

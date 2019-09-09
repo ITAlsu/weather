@@ -1,11 +1,11 @@
-import { WeatherItem } from '../models/weather-item';
+import { WeatherItem } from '../models/weather-item/weather-item';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { SearchItem } from '../models/search-item';
+import { SearchItem } from '../models/search-item/search-item';
 import { WeatherHistoryService } from './weather-history.service';
-import { WeatherData } from '../models/weather-data';
+import { WeatherData } from '../models/weather-data/weather-data';
 @Injectable({
   providedIn: 'root'
 })
