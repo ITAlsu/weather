@@ -3,6 +3,7 @@ import { WeatherItem } from '../models/weather-item/weather-item';
 import { WeatherService } from '../services/weather.service';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { WeatherHistoryService } from '../services/weather-history.service';
 
 @Component({
   selector: 'app-weather',
@@ -11,9 +12,10 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 })
 
 export class WeatherComponent implements OnInit {
-  weatherItems: WeatherItem[] = [];
+  weatherItems: WeatherItem;
   private searchTerms = new Subject<string>();
-  constructor(private _weatherService: WeatherService) { }
+  constructor(private _weatherService: WeatherService,
+              private _weatherHistoryService: WeatherHistoryService) { }
 
   ngOnInit() {
     this.searchTerms
@@ -28,8 +30,20 @@ export class WeatherComponent implements OnInit {
       // no error handling (it is handled on this._weatherService.getWeatherItemsByCityName(term)))
     );
 
-    this._weatherService.currentItem.subscribe(item => this.weatherItems[0] = item)  };
-  
+    this._weatherService.searchSubject.subscribe(
+      data => {
+        return this.weatherItems = data;
+      },
+      error => {
+        console.warn(error);
+      }
+    );
+  // this.getSearchHistoryItems();
+    // this._weatherService.currentItem.subscribe(data => {
+    //   return this.weatherItems = data;
+    // });
+  }
+
   onSearchedCity(cityName: string) {
     this.searchTerms.next(cityName);
   }

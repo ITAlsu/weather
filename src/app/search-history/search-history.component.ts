@@ -39,19 +39,12 @@ export class SearchHistoryComponent implements OnInit {
     this.getSearchHistoryItems();
   }
 
-  repeatSearch(cityName: string, days: number) {
-    this._weatherService.getWeatherItemsByCityName(cityName, days)
+  repeatSearch(searchItem: SearchItem) {
+    this._weatherService.getWeatherItemsByCityName(searchItem.city, searchItem.days)
     .subscribe(
       data => {
-        const weatherData: WeatherData[] = [];
-        for (let index = 0; index < data.weatherData.length; index++) {
-          const element = data.weatherData[index];
-          weatherData[index] = new WeatherData(element.temperMin, element.temperMax, element.icon);
-        }
-        const weatherItem = new WeatherItem(data.city.id, data.city.name, data.city.country, data.list.length, weatherData);
-        this._weatherService.changeItem(weatherItem);
+        this._weatherService.loadHistory(data);
       }
     );
-    
   }
 }

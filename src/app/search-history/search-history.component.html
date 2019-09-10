@@ -4,7 +4,7 @@
     <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between align-items-center"
             *ngFor = 'let item of searchHistoryItems'
-            (click) = 'repeatSearch(item.city, item.days)'>
+            (click) = 'repeatSearch(item)'>
             {{item.city}} {{item.days==1?'today':item.days+' days'}}
             <span class="badge badge-primary badge-pill" (click)="deleteSearchHistoryItem(item.id, item.days)">X</span>
         </li>

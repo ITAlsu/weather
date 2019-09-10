@@ -36,11 +36,10 @@ export class WeatherHistoryService {
   deleteSearchHistoryItem(id: number, days: number): void {
     this.setSearchHistoryItems();
     const index = this.historyItems.findIndex(x => x.id === id && x.days === days);
-    if (index != -1) {
+    if (index !== -1) {
       this.historyItems.splice(index, 1);
       localStorage.setItem('historyItems', JSON.stringify(this.historyItems));
     }
   }
 
-  
 }
