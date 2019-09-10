@@ -1,0 +1,16 @@
+.rng-content{
+    margin-top: 60px;
+    padding: 0 18px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.data-column {
+    flex: 1 1 300px;
+    min-width: 400px;
+}
+
+.side-bar {
+    width: 300px;
+    min-width: 300px;
+}

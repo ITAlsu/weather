@@ -5,6 +5,5 @@ export interface IWeatherItem {
     cityName: string;
     country: string;
     days: number;
-    weaterData: WeatherData[];
-
+    weatherData: WeatherData[];
 }

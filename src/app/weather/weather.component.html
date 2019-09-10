@@ -1,10 +1,11 @@
-<main class="rng-content">
+<div>
     <app-search-city (searchedCity)="onSearchedCity($event)" (searchedDays)="onSearchedDays($event)"></app-search-city>
 
-    <div *ngIf="weatherItems !== undefined && weatherItems.length != 0">
-        <div>city: {{weatherItems.cityName}}</div>
-        <div>country: {{weatherItems.country}}</div>
+    <div class="logic-block head-text" *ngIf="weatherItems !== undefined && weatherItems.length != 0">
+        <span>City: {{weatherItems.cityName}}, Country: {{weatherItems.country}} </span>
     </div>
-    
-    <app-weather-item *ngFor="let weatherItem of weatherItems.weaterData" [weatherItem] = "weatherItem"></app-weather-item>
-</main>
+
+    <div class="weather-grid logic-block"> 
+        <app-weather-item class="weather-grid" *ngFor="let weatherItem of weatherItems.weatherData" [weatherItem] = "weatherItem"></app-weather-item>
+    </div>
+</div>

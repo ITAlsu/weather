@@ -1,9 +1,12 @@
-<p>Search history:</p>
+<div class ="logic-block">
+    <p class="header-text">Search history:</p>
 
-<ul class="list-group">
-    <li class="list-group-item d-flex justify-content-between align-items-center"
-        *ngFor = 'let item of searchHistoryItems'>
-        {{item.city}} {{item.days==1?'today':item.days+' days'}}
-        <span class="badge badge-primary badge-pill" (click)="deleteSearchHistoryItem(item.id)">X</span>
-    </li>
-</ul>
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center"
+            *ngFor = 'let item of searchHistoryItems'
+            (click) = 'repeatSearch(item.city, item.days)'>
+            {{item.city}} {{item.days==1?'today':item.days+' days'}}
+            <span class="badge badge-primary badge-pill" (click)="deleteSearchHistoryItem(item.id, item.days)">X</span>
+        </li>
+    </ul>
+</div>

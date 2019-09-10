@@ -12,7 +12,6 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 export class WeatherComponent implements OnInit {
   weatherItems: WeatherItem[] = [];
-  cityName: string = '';
   private searchTerms = new Subject<string>();
   constructor(private _weatherService: WeatherService) { }
 
@@ -28,8 +27,9 @@ export class WeatherComponent implements OnInit {
       }
       // no error handling (it is handled on this._weatherService.getWeatherItemsByCityName(term)))
     );
-  }
 
+    this._weatherService.currentItem.subscribe(item => this.weatherItems[0] = item)  };
+  
   onSearchedCity(cityName: string) {
     this.searchTerms.next(cityName);
   }

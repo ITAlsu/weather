@@ -1,7 +1,7 @@
 import { WeatherItem } from '../models/weather-item/weather-item';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { SearchItem } from '../models/search-item/search-item';
 import { WeatherHistoryService } from './weather-history.service';
@@ -13,6 +13,9 @@ export class WeatherService {
   url = 'http://api.openweathermap.org/data/2.5/forecast?q=';
   urlCities = 'http://api.openweathermap.org/data/2.5/weather?q=';
   KEY = '3be1d5e2239f3863fd54b5b254c32256';
+  weatherData: WeatherData[] = [];
+  private itemSource = new BehaviorSubject<WeatherItem>({} as WeatherItem);
+  currentItem = this.itemSource.asObservable();
 
   constructor(private _http: HttpClient,
               private _weatherHistoryService: WeatherHistoryService) {}
@@ -29,9 +32,15 @@ export class WeatherService {
               const element = data.list[index];
               weatherData[index] = new WeatherData(element.main.temp_min, element.main.temp_max, element.weather[0].icon);
             }
+            
             this._weatherHistoryService.addSearchHistoryItem(new SearchItem(data.city.id, data.city.name, days));
             return new WeatherItem(data.city.id, data.city.name, data.city.country, data.list.length, weatherData);
         }), catchError(this.handleError));
+  }
+
+  changeItem(weatherItem: WeatherItem)  {
+    this.itemSource.next(weatherItem);
+    //nenthis._weatherHistoryService.addSearchHistoryItem(new SearchItem(data.city.id, data.city.name, days));
   }
 
   private handleError(error: HttpErrorResponse) {

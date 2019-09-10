@@ -6,14 +6,14 @@ export class WeatherItem implements IWeatherItem {
     cityName: string;
     country: string;
     days: number;
-    weaterData: WeatherData[];
+    weatherData: WeatherData[];
 
     constructor(id: number, cityName: string, country: string, days: number,
-                weaterData: WeatherData[]) {
+                weatherData: WeatherData[]) {
         this.id = id;
         this.cityName = cityName;
         this.country = country;
         this.days  = days;
-        this.weaterData = weaterData;
+        this.weatherData = weatherData;
     }
 }
