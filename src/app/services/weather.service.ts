@@ -28,12 +28,21 @@ export class WeatherService {
       return of([]);
     }
 
-    return this._http.get<any>(`${this.url}${cityName}&APPID=${this.KEY}&units=metric&cnt=${days}`)
+    // crutch : API returns only weather for 5 day / 3 hour forecast
+    // here we take only 12:00 weather info
+    // ${days*8}` - 24h every / 3 hour = 8 results
+    return this._http.get<any>(`${this.url}${cityName}&APPID=${this.KEY}&units=metric&cnt=${days*8}`)
       .pipe(map(data => {
             const weatherData: WeatherData[] = [];
             for (let index = 0; index < data.list.length; index++) {
               const element = data.list[index];
-              weatherData[index] = new WeatherData(element.main.temp_min, element.main.temp_max, element.weather[0].icon);
+
+              // crutch : API returns only weather for 5 day / 3 hour forecast
+              // here we take only 12:00 weather info
+              let a = (new Date(1000*element.dt)).getHours();
+              if (a === 15) {
+                weatherData.push(new WeatherData(element.main.temp_min, element.main.temp_max, element.weather[0].icon, element.dt));
+              }
             }
             this._weatherHistoryService.addSearchHistoryItem(new SearchItem(data.city.id, data.city.name, days));
             return new WeatherItem(data.city.id, data.city.name, data.city.country, data.list.length, weatherData);

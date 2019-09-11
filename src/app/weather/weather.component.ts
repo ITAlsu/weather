@@ -18,6 +18,8 @@ export class WeatherComponent implements OnInit {
               private _weatherHistoryService: WeatherHistoryService) { }
 
   ngOnInit() {
+
+    // show weather item after successful search
     this.searchTerms
     .pipe(
       debounceTime(1000),
@@ -30,6 +32,7 @@ export class WeatherComponent implements OnInit {
       // no error handling (it is handled on this._weatherService.getWeatherItemsByCityName(term)))
     );
 
+    //search history item click
     this._weatherService.searchSubject.subscribe(
       data => {
         return this.weatherItems = data;

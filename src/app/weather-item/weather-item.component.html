@@ -2,5 +2,6 @@
     <img src="http://openweathermap.org/img/wn/{{weatherItem.icon}}@2x.png" width="50" height="50">
     <div>Max: {{weatherItem.temperMax}}</div>
     <div>Min : {{weatherItem.temperMin}}</div>
+    <div> {{weatherItem.date*1000 | date}}</div>
 </div>
 
