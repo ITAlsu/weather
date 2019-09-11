@@ -38,10 +38,6 @@ export class WeatherComponent implements OnInit {
         console.warn(error);
       }
     );
-  // this.getSearchHistoryItems();
-    // this._weatherService.currentItem.subscribe(data => {
-    //   return this.weatherItems = data;
-    // });
   }
 
   onSearchedCity(cityName: string) {
