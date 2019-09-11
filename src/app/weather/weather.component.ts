@@ -14,8 +14,7 @@ import { WeatherHistoryService } from '../services/weather-history.service';
 export class WeatherComponent implements OnInit {
   weatherItems: WeatherItem;
   private searchTerms = new Subject<string>();
-  constructor(private _weatherService: WeatherService,
-              private _weatherHistoryService: WeatherHistoryService) { }
+  constructor(private _weatherService: WeatherService) { }
 
   ngOnInit() {
 

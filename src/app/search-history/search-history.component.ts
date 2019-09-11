@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchItem } from '../models/search-item/search-item';
 import { WeatherHistoryService } from '../services/weather-history.service';
-import { WeatherComponent } from '../weather/weather.component';
 import { WeatherService } from '../services/weather.service';
-import { WeatherItem } from '../models/weather-item/weather-item';
-import { WeatherData } from '../models/weather-data/weather-data';
 
 @Component({
   selector: 'app-search-history',

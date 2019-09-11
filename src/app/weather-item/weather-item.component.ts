@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { WeatherItem} from '../models/weather-item/weather-item';
 import { WeatherData } from '../models/weather-data/weather-data';
 
 @Component({

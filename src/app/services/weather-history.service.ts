@@ -8,8 +8,8 @@ import { Subject } from 'rxjs';
 export class WeatherHistoryService {
   MAX_HISTORY = 10;
   searchSubject: Subject<SearchItem> = new Subject<SearchItem>();
-
   historyItems: SearchItem[];
+
   constructor() { }
 
   addSearchHistoryItem(searchItem: SearchItem) {
@@ -19,6 +19,7 @@ export class WeatherHistoryService {
     if (this.historyItems.length > this.MAX_HISTORY) {
       this.historyItems.shift();
     }
+
     localStorage.setItem('historyItems', JSON.stringify(this.historyItems));
     this.searchSubject.next(searchItem);
   }
@@ -35,6 +36,7 @@ export class WeatherHistoryService {
 
   deleteSearchHistoryItem(id: number, days: number): void {
     this.setSearchHistoryItems();
+    
     const index = this.historyItems.findIndex(x => x.id === id && x.days === days);
     if (index !== -1) {
       this.historyItems.splice(index, 1);
