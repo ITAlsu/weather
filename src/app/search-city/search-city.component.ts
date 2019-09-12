@@ -1,5 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { WeatherItem } from '../models/weather-item/weather-item';
+import { WeatherService } from '../services/weather.service';
 
 @Component({
   selector: 'app-search-city',
@@ -7,24 +8,59 @@ import { WeatherItem } from '../models/weather-item/weather-item';
   styleUrls: ['./search-city.component.css']
 })
 export class SearchCityComponent implements OnInit {
-  weatherItems: WeatherItem[];
+  weatherItems: WeatherItem;
+  cityName: string ='';
   checkToday: boolean = true;
+  check3Days: boolean = false;
+  check5Days: boolean = false;
+
   @Output() searchedCity = new EventEmitter<string>();
   @Output() searchedDays = new EventEmitter<any>();
 
-  constructor() { }
+  constructor(private _weatherService: WeatherService) { }
 
   ngOnInit() {
+    //search history item click
+    this._weatherService.searchSubject.subscribe(
+      data => {
+        this.activateCurrentPeriod(data.days/8);
+        return this.cityName = data.cityName;
+      },
+      error => {
+        console.warn(error);
+      }
+    );
   }
 
   onSearchCity(cityName: string) {
-    this.checkToday = true;
+    this.activateCurrentPeriod(1);
     this.searchedCity.emit(cityName);
   }
 
   onSearchDays(cityName: string, days: number) {
-    if (days !== 1) { this.checkToday = false; }
+    this.activateCurrentPeriod(days);
     this.searchedDays.emit({cityName, days});
+  }
+
+  activateCurrentPeriod(checkPeriod:number) {
+    debugger;
+    switch (checkPeriod) {
+      case 1:
+          this.checkToday = true;
+          this.check3Days = false;
+          this.check5Days = false;
+          break;
+      case 3:
+          this.checkToday = false;
+          this.check3Days = true;
+          this.check5Days = false;
+          break;
+      case 5:
+          this.checkToday = false;
+          this.check3Days = false;
+          this.check5Days = true;
+          break;
+    }
   }
 
 }
