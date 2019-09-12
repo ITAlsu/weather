@@ -5,7 +5,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { SearchItem } from '../models/search-item/search-item';
 import { WeatherHistoryService } from './weather-history.service';
-import { WeatherData } from '../models/weather-data/weather-data';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,10 +18,11 @@ export class WeatherService {
 
   // consts for crutch, see comment below
   forecast = 8;
-  averageTemperatureHours = 15; // 15:00
 
-  constructor(private _http: HttpClient,
-              private _weatherHistoryService: WeatherHistoryService) {}
+  constructor(
+    private http: HttpClient,
+    private weatherHistoryService: WeatherHistoryService
+  ) {}
 
   loadHistory(weatherItem: WeatherItem) {
     this.searchSubject.next(weatherItem);
@@ -32,25 +33,26 @@ export class WeatherService {
       return of([]);
     }
 
-    // crutch : API returns only weather for max 5 day / 3 hour forecast each 
-    // to get the averaged temperature for more than 1 day - is not for FREE =(
-    // here we take only 15:00 weather info as if it is an averaged temperature
-    // 24h every / 3 hour = 8 results, so Api returns 8 results per day. We take the one with time 15:00
-    return this._http.get<any>(`${this.url}${cityName}&APPID=${this.KEY}&units=metric&cnt=${days*this.forecast}`)
-      .pipe(map(data => {
-            const weatherData: WeatherData[] = [];
-            for (let index = 0; index < data.list.length; index++) {
-              const element = data.list[index];
-
-              // crutch : API returns only weather for 5 day / 3 hour forecast
-              // here we take only 15:00 weather info
-              if ((new Date(1000*element.dt)).getHours() === this.averageTemperatureHours) {
-                weatherData.push(new WeatherData(element.main.temp_min, element.main.temp_max, element.weather[0].icon, String(1000*element.dt)));
-              }
-            }
-            this._weatherHistoryService.addSearchHistoryItem(new SearchItem(data.city.id, data.city.name, days));
-            return new WeatherItem(data.city.id, data.city.name, data.city.country, data.list.length, weatherData);
-        }), catchError(this.handleError));
+    return this.http
+      .get<any>(
+        `${this.url}${cityName}&APPID=${this.KEY}&units=metric&cnt=${days *
+          this.forecast}`
+      )
+      .pipe(
+        map(data => {
+          this.weatherHistoryService.addSearchHistoryItem(
+            new SearchItem(data.city.id, data.city.name, days)
+          );
+          return new WeatherItem(
+            data.city.id,
+            data.city.name,
+            data.city.country,
+            data.list.length,
+            data.list
+          );
+        }),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -1,15 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { WeatherComponent } from './weather/weather.component';
-import { SearchHistoryComponent } from './search-history/search-history.component';
 import { FormsModule } from '@angular/forms';
-import { SearchCityComponent } from './search-city/search-city.component';
-import { WeatherItemComponent } from './weather-item/weather-item.component';
-import { HttpClientModule }    from '@angular/common/http';
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
-
+import { SearchCityComponent } from './components/search-city/search-city.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { WeatherComponent } from './components/weather/weather.component';
+import { SearchHistoryComponent } from './components/search-history/search-history.component';
+import { WeatherItemComponent } from './components/weather-item/weather-item.component';
 
 @NgModule({
   declarations: [
@@ -21,12 +20,8 @@ import { HeaderComponent } from './header/header.component';
     FooterComponent,
     HeaderComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule
-  ],
+  imports: [BrowserModule, FormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

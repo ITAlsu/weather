@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { WeatherData } from '../models/weather-data/weather-data';
+import { WeatherData } from '../../models/weather-data/weather-data';
 
 @Component({
   selector: 'app-weather-item',
@@ -9,8 +9,5 @@ import { WeatherData } from '../models/weather-data/weather-data';
 export class WeatherItemComponent implements OnInit {
   @Input() weatherItem: WeatherData;
 
-  ngOnInit() {
-
-  }
-
+  ngOnInit() {}
 }

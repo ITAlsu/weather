@@ -1,0 +1,17 @@
+<div class="logic-block">
+  <p class="header-text">Search history:</p>
+
+  <ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-center"
+      *ngFor="let item of searchHistoryItems">
+
+      <button class="btn btn-link" (click)="repeatSearch(item)">
+        {{ item.city }} {{ getPeriodLabel(item.days) }}
+      </button>
+
+      <button class="badge badge-primary badge-pill justify-content-between delete-history"
+        (click)="deleteSearchHistoryItem(item.id, item.days)">X</button>
+
+    </li>
+  </ul>
+</div>

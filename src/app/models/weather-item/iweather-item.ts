@@ -1,9 +1,9 @@
 import { WeatherData } from '../weather-data/weather-data';
 
 export interface IWeatherItem {
-    id: number;
-    cityName: string;
-    country: string;
-    days: number;
-    weatherData: WeatherData[];
+  id: number;
+  cityName: string;
+  country: string;
+  days: number;
+  weatherData: WeatherData[];
 }

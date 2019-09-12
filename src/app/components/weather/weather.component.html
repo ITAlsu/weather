@@ -1,0 +1,14 @@
+<div>
+  <app-search-city (searchedCity)="onSearchedCity($event)" (searchedDays)="onSearchedDays($event)"
+    [cityName]="cityName"></app-search-city>
+
+  <div class="logic-block head-text" *ngIf="weatherItems !== undefined && weatherItems.length != 0">
+    <span>City: {{weatherItems.cityName}}, Country: {{weatherItems.country}} </span>
+  </div>
+
+  <div class="weather-grid logic-block" *ngIf="weatherItems !== undefined && weatherItems.length != 0">
+    <app-weather-item class="weather-grid" *ngFor="let weatherItem of weatherItems.weatherData"
+      [weatherItem]="weatherItem"></app-weather-item>
+  </div>
+  
+</div>

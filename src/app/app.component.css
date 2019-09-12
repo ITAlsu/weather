@@ -1,16 +1,16 @@
-.rng-content{
-    margin-top: 60px;
-    padding: 0 18px;
-    display: flex;
-    flex-wrap: wrap;
+.rng-content {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 60px;
+  padding: 0 18px;
 }
 
 .data-column {
-    flex: 1 1 300px;
-    min-width: 400px;
+  min-width: 400px;
+  flex: 1 1 300px;
 }
 
 .side-bar {
-    width: 300px;
-    min-width: 300px;
+  width: 300px;
+  min-width: 300px;
 }

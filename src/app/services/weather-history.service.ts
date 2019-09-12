@@ -10,7 +10,7 @@ export class WeatherHistoryService {
   searchSubject: Subject<SearchItem> = new Subject<SearchItem>();
   historyItems: SearchItem[];
 
-  constructor() { }
+  constructor() {}
 
   addSearchHistoryItem(searchItem: SearchItem) {
     this.deleteSearchHistoryItem(searchItem.id, searchItem.days);
@@ -20,28 +20,31 @@ export class WeatherHistoryService {
       this.historyItems.shift();
     }
 
-    localStorage.setItem('historyItems', JSON.stringify(this.historyItems));
+    this.uploadSearchHistoryItems();
     this.searchSubject.next(searchItem);
   }
 
-  setSearchHistoryItems() {
+  initSearchHistoryItems() {
     const storageData = JSON.parse(localStorage.getItem('historyItems'));
     this.historyItems = storageData ? storageData : [];
   }
 
+  uploadSearchHistoryItems() {
+    localStorage.setItem('historyItems', JSON.stringify(this.historyItems));
+  }
+
   getSearchHistoryItems(): SearchItem[] {
-    this.setSearchHistoryItems();
     return this.historyItems;
   }
 
   deleteSearchHistoryItem(id: number, days: number): void {
-    this.setSearchHistoryItems();
-    
-    const index = this.historyItems.findIndex(x => x.id === id && x.days === days);
+    const index = this.historyItems.findIndex(
+      x => x.id === id && x.days === days
+    );
+
     if (index !== -1) {
       this.historyItems.splice(index, 1);
-      localStorage.setItem('historyItems', JSON.stringify(this.historyItems));
+      this.uploadSearchHistoryItems();
     }
   }
-
 }
