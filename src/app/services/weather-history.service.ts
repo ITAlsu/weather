@@ -8,12 +8,17 @@ import { Subject } from 'rxjs';
 export class WeatherHistoryService {
   MAX_HISTORY = 10;
   searchSubject: Subject<SearchItem> = new Subject<SearchItem>();
-  historyItems: SearchItem[];
+  private historyItems: SearchItem[];
 
   constructor() {}
 
+  initSearchHistoryItems() {
+    const storageData = JSON.parse(localStorage.getItem('historyItems'));
+    this.historyItems = storageData ? storageData : [];
+  }
+
   addSearchHistoryItem(searchItem: SearchItem) {
-    this.deleteFromStorageData(searchItem.id, searchItem.days);
+    this.deleteLocally(searchItem.id, searchItem.days);
 
     this.historyItems.push(searchItem);
     if (this.historyItems.length > this.MAX_HISTORY) {
@@ -24,20 +29,7 @@ export class WeatherHistoryService {
     this.searchSubject.next(searchItem);
   }
 
-  initSearchHistoryItems() {
-    const storageData = JSON.parse(localStorage.getItem('historyItems'));
-    this.historyItems = storageData ? storageData : [];
-  }
-
-  uploadSearchHistoryItems() {
-    localStorage.setItem('historyItems', JSON.stringify(this.historyItems));
-  }
-
-  getSearchHistoryItems(): SearchItem[] {
-    return this.historyItems;
-  }
-
-  deleteFromStorageData(id: number, days: number): void {
+  deleteLocally(id: number, days: number): void {
     const index = this.historyItems.findIndex(
       x => x.id === id && x.days === days
     );
@@ -48,7 +40,17 @@ export class WeatherHistoryService {
   }
 
   deleteSearchHistoryItem(id: number, days: number): void {
-    this.deleteFromStorageData(id, days);
+    this.deleteLocally(id, days);
     this.uploadSearchHistoryItems();
   }
+
+  uploadSearchHistoryItems() {
+    localStorage.setItem('historyItems', JSON.stringify(this.historyItems));
+  }
+
+  getSearchHistoryItems(): SearchItem[] {
+    return this.historyItems;
+  }
+
+
 }
