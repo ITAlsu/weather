@@ -48,11 +48,11 @@ export class SearchHistoryComponent implements OnInit, OnDestroy {
   }
 
   repeatSearch(searchItem: SearchItem) {
-    this.weatherService
+    this.subscription.add(this.weatherService
       .getWeatherItemsByCityName(searchItem.city, searchItem.days)
       .subscribe(data => {
         this.weatherService.loadHistory(data);
-      });
+      }));
   }
 
   ngOnDestroy() {
