@@ -19,8 +19,8 @@ export class SearchHistoryComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-
     this.weatherHistoryService.initSearchHistoryItems();
+
     this.subscription = this.weatherHistoryService.searchSubject.subscribe(
       data => {
         this.getSearchHistoryItems();

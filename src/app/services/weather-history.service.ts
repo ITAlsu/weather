@@ -13,7 +13,7 @@ export class WeatherHistoryService {
   constructor() {}
 
   addSearchHistoryItem(searchItem: SearchItem) {
-    this.deleteSearchHistoryItem(searchItem.id, searchItem.days);
+    this.deleteFromStorageData(searchItem.id, searchItem.days);
 
     this.historyItems.push(searchItem);
     if (this.historyItems.length > this.MAX_HISTORY) {
@@ -37,14 +37,18 @@ export class WeatherHistoryService {
     return this.historyItems;
   }
 
-  deleteSearchHistoryItem(id: number, days: number): void {
+  deleteFromStorageData(id: number, days: number): void {
     const index = this.historyItems.findIndex(
       x => x.id === id && x.days === days
     );
 
     if (index !== -1) {
       this.historyItems.splice(index, 1);
-      this.uploadSearchHistoryItems();
     }
+  }
+
+  deleteSearchHistoryItem(id: number, days: number): void {
+    this.deleteFromStorageData(id, days);
+    this.uploadSearchHistoryItems();
   }
 }
