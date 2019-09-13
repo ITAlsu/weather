@@ -1,14 +1,34 @@
-<div>
-  <app-search-city (searchedCity)="onSearchedCity($event)" (searchedDays)="onSearchedDays($event)"
-    [cityName]="cityName"></app-search-city>
+<div class="rng-content">
+  <div class="data-column">
+    <app-search-city
+      (searchedCity)="searchTerms.next($event)"
+      (searchedDays)="onSearchedDays($event)"
+      [cityName]="weatherItems?.cityName"
+      [currentPeriod]="weatherItems?.days / 8"
+    ></app-search-city>
 
-  <div class="logic-block head-text" *ngIf="weatherItems !== undefined && weatherItems.length != 0">
-    <span>City: {{weatherItems.cityName}}, Country: {{weatherItems.country}} </span>
+    <div *ngIf="weatherItems !== undefined">
+      <div class="logic-block head-text" *ngIf="weatherItems.length != 0">
+        <span
+          >City: {{ weatherItems.cityName }}, Country:
+          {{ weatherItems.country }}
+        </span>
+      </div>
+
+      <div class="weather-grid logic-block" *ngIf="weatherItems.length != 0">
+        <app-weather-item
+          class="weather-grid"
+          *ngFor="let weatherItem of weatherItems.weatherData"
+          [weatherItem]="weatherItem"
+        ></app-weather-item>
+      </div>
+    </div>
   </div>
 
-  <div class="weather-grid logic-block" *ngIf="weatherItems !== undefined && weatherItems.length != 0">
-    <app-weather-item class="weather-grid" *ngFor="let weatherItem of weatherItems.weatherData"
-      [weatherItem]="weatherItem"></app-weather-item>
-  </div>
-  
+  <app-search-history
+    class="side-bar"
+    [searchHistoryItems]="searchHistoryItems"
+    (repeatSearch)="onRepeatedSearch($event)"
+    (deleteSearch)="onDeletedSearch($event)"
+  ></app-search-history>
 </div>

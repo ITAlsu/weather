@@ -10,3 +10,20 @@
 .head-text {
   font-weight: 700;
 }
+
+.rng-content {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 60px;
+  padding: 0 18px;
+}
+
+.data-column {
+  min-width: 400px;
+  flex: 1 1 300px;
+}
+
+.side-bar {
+  width: 300px;
+  min-width: 300px;
+}

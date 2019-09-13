@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WeatherItem } from '../../models/weather-item/weather-item';
 import { WeatherService } from '../../services/weather.service';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { SearchItem } from 'src/app/models/search-item/search-item';
+import { WeatherHistoryService } from 'src/app/services/weather-history.service';
 
 @Component({
   selector: 'app-weather',
@@ -11,9 +13,11 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 })
 export class WeatherComponent implements OnInit, OnDestroy {
   weatherItems: WeatherItem;
+  searchHistoryItems: SearchItem[] = [] ;
   private searchTerms = new Subject<string>();
-  private subscription: Subscription;
-  constructor(private weatherService: WeatherService) {}
+
+  constructor(private weatherService: WeatherService,
+              private weatherHistoryService: WeatherHistoryService) {}
 
   ngOnInit() {
     // show weather item after successful search
@@ -27,42 +31,36 @@ export class WeatherComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         data => {
-          return (this.weatherItems = data);
+          this.searchHistoryItems = this.weatherHistoryService.getSearchHistoryItems();
+          return this.weatherItems = data;
         }
-        // no error handling (it is handled on this._weatherService.getWeatherItemsByCityName(term)))
       );
 
-    // search history item click
-    this.subscription = this.weatherService.searchSubject.subscribe(
-      data => {
-        return (this.weatherItems = data);
-      },
-      error => {
-        console.warn(error);
-      }
-    );
+    this.weatherHistoryService.initSearchHistoryItems();
+    this.searchHistoryItems = this.weatherHistoryService.getSearchHistoryItems();
   }
 
-  onSearchedCity(cityName: string) {
-    this.searchTerms.next(cityName);
+  onSearchedDays(searchItem: SearchItem) {
+    this.weatherService
+      .getWeatherItemsByCityName(searchItem.city, searchItem.days)
+      .subscribe(
+        data => {
+          return (this.weatherItems = data);
+        }
+      );
   }
 
-  onSearchedDays(info: { cityName: string; days: number }) {
-    if (info.cityName !== '') {
-      this.weatherService
-        .getWeatherItemsByCityName(info.cityName, info.days)
-        .subscribe(
-          data => {
-            return (this.weatherItems = data);
-          }
-          // no error handling (it is handled on this._weatherService.getWeatherItemsByCityName(term)))
-        );
-    }
+  onRepeatedSearch(searchItem: SearchItem) {
+    this.weatherHistoryService.addSearchHistoryItem(searchItem);
+    this.onSearchedDays(searchItem);
+  }
+
+  onDeletedSearch(searchItem: SearchItem) {
+    this.weatherHistoryService.deleteSearchHistoryItem(searchItem.id, searchItem.days);
   }
 
   ngOnDestroy() {
     this.searchTerms.next();
     this.searchTerms.complete();
-    this.subscription.unsubscribe();
   }
 }

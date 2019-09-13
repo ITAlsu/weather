@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { SearchItem } from '../models/search-item/search-item';
-import { Subject } from 'rxjs';
+import { MAX_HISTORY } from '../store/app-config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherHistoryService {
-  MAX_HISTORY = 10;
-  searchSubject: Subject<SearchItem> = new Subject<SearchItem>();
   private historyItems: SearchItem[];
 
   constructor() {}
@@ -17,16 +15,23 @@ export class WeatherHistoryService {
     this.historyItems = storageData ? storageData : [];
   }
 
+  getSearchHistoryItems(): SearchItem[] {
+    return this.historyItems;
+  }
+
+  setSearchHistoryItems() {
+    localStorage.setItem('historyItems', JSON.stringify(this.historyItems));
+  }
+
   addSearchHistoryItem(searchItem: SearchItem) {
     this.deleteLocally(searchItem.id, searchItem.days);
 
     this.historyItems.push(searchItem);
-    if (this.historyItems.length > this.MAX_HISTORY) {
+    if (this.historyItems.length > MAX_HISTORY) {
       this.historyItems.shift();
     }
 
-    this.uploadSearchHistoryItems();
-    this.searchSubject.next(searchItem);
+    this.setSearchHistoryItems();
   }
 
   deleteLocally(id: number, days: number): void {
@@ -41,16 +46,12 @@ export class WeatherHistoryService {
 
   deleteSearchHistoryItem(id: number, days: number): void {
     this.deleteLocally(id, days);
-    this.uploadSearchHistoryItems();
+    this.setSearchHistoryItems();
   }
 
-  uploadSearchHistoryItems() {
-    localStorage.setItem('historyItems', JSON.stringify(this.historyItems));
-  }
 
-  getSearchHistoryItems(): SearchItem[] {
-    return this.historyItems;
-  }
+
+
 
 
 }

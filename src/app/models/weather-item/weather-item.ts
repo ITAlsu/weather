@@ -1,7 +1,7 @@
 import { WeatherData } from '../weather-data/weather-data';
 import { IWeatherItem } from './iweather-item';
+import { AVERAGE_TEMP_HOURS } from '../../store/app-config';
 
-const averageTemperatureHours = 15; // 15:00
 export class WeatherItem implements IWeatherItem {
   id: number;
   cityName: string;
@@ -23,17 +23,11 @@ export class WeatherItem implements IWeatherItem {
     this.weatherData = this.filterCurrentDate(weatherData);
   }
 
-  // crutch : API returns only weather for max 5 day / 3 hour forecast each
-  // to get the averaged temperature for more than 1 day - is not for FREE =(
-  // here we take only 15:00 weather info as if it is an averaged temperature
-  // 24h every / 3 hour = 8 results, so Api returns 8 results per day. We take the one with time 15:00
   filterCurrentDate(unfilteredWeatherData: any[]): WeatherData[] {
     const filteredWeatherData: WeatherData[] = [];
 
     for (const element of unfilteredWeatherData) {
-      // crutch : API returns only weather for 5 day / 3 hour forecast
-      // here we take only 15:00 weather info
-      if (new Date(+element.dt * 1000).getHours() === averageTemperatureHours) {
+      if (new Date(+element.dt * 1000).getHours() === AVERAGE_TEMP_HOURS) {
         filteredWeatherData.push(
           new WeatherData(
             element.main.temp_min,
