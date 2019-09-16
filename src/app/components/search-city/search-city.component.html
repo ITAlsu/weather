@@ -24,40 +24,43 @@
   </div>
 
   <div
-    class="btn-group btn-group-toggle btn-group-justified logic-block"
+    class="btn-group btn-group-justified period-buttons"
     data-toggle="buttons"
   >
-    <label
-      class="btn btn-secondary"
+    <button
+      type="button"
+      class="btn btn-light period-button"
       [ngClass]="{
         active: currentPeriod == SearchPeriod.today,
         disabled: searchBox.value === ''
       }"
       (click)="onSearch(searchBox.value, SearchPeriod.today)"
     >
-      <input type="radio" name="options" id="option1" />TODAY
-    </label>
+      TODAY
+    </button>
 
-    <label
-      class="btn btn-secondary"
+    <button
+      type="button"
+      class="btn btn-light period-button"
       [ngClass]="{
         active: currentPeriod == SearchPeriod.treeDays,
         disabled: searchBox.value === ''
       }"
       (click)="onSearch(searchBox.value, SearchPeriod.treeDays)"
     >
-      <input type="radio" name="options" id="option2" />3 DAYS
-    </label>
+      3 DAYS
+    </button>
 
-    <label
-      class="btn btn-secondary"
+    <button
+      type="button"
+      class="btn btn-light period-button"
       [ngClass]="{
         active: currentPeriod == SearchPeriod.fiveDays,
         disabled: searchBox.value === ''
       }"
       (click)="onSearch(searchBox.value, SearchPeriod.fiveDays)"
     >
-      <input type="radio" name="options" id="option3" />5 DAYS
-    </label>
+      5 DAYS
+    </button>
   </div>
 </div>
