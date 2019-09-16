@@ -1,21 +1,20 @@
 <div class="rng-content">
   <div class="data-column">
     <app-search-city
-      (searchedCity)="searchTerms.next($event)"
-      (searchedDays)="onSearchedDays($event)"
+      (searched)="onSearched($event)"
       [cityName]="weatherItems?.cityName"
-      [currentPeriod]="weatherItems?.days / 8"
+      [currentPeriod]="currentPeriod"
     ></app-search-city>
 
-    <div *ngIf="weatherItems !== undefined">
-      <div class="logic-block head-text" *ngIf="weatherItems.length != 0">
+    <div *ngIf="showItems">
+      <div class="logic-block head-text">
         <span
           >City: {{ weatherItems.cityName }}, Country:
           {{ weatherItems.country }}
         </span>
       </div>
 
-      <div class="weather-grid logic-block" *ngIf="weatherItems.length != 0">
+      <div class="weather-grid logic-block">
         <app-weather-item
           class="weather-grid"
           *ngFor="let weatherItem of weatherItems.weatherData"

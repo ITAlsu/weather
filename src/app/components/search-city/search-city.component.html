@@ -1,48 +1,63 @@
 <div class="logic-block">
   <label for="inputSearch" class="header-text">Search the city</label>
-  <input
-    type="text"
-    class="form-control"
-    id="inputSearch"
-    aria-describedby="cityFound"
-    placeholder="Enter the city here"
-    #searchBox
-    [ngModel]="cityName"
-    id="search-box"
-    (input)="onSearchCity(searchBox.value)"
-  />
-</div>
-
-<div
-  class="btn-group btn-group-toggle btn-group-justified logic-block"
-  data-toggle="buttons"
->
-  <label
-    class="btn btn-secondary"
-    [ngClass]="{ active: currentPeriod == '1', disabled: searchBox.value === '' }"
-    (click)="onSearchDays(searchBox.value, 1)"
-  >
+  <div class="input-group mb-3">
     <input
-      type="radio"
-      name="options"
-      id="option1"
-      
-    />TODAY
-  </label>
+      type="text"
+      class="form-control"
+      id="inputSearch"
+      aria-describedby="cityFound"
+      placeholder="Enter the city here"
+      #searchBox
+      [ngModel]="cityName"
+      id="search-box"
+      (keyup.enter)="onSearch(searchBox.value)"
+    />
+    <div class="input-group-btn">
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        (click)="onSearch(searchBox.value, currentPeriod)"
+      >
+        Search
+      </button>
+    </div>
+  </div>
 
-  <label
-    class="btn btn-secondary"
-    [ngClass]="{ active: currentPeriod == '3', disabled: searchBox.value === '' }"
-    (click)="onSearchDays(searchBox.value, 3)"
+  <div
+    class="btn-group btn-group-toggle btn-group-justified logic-block"
+    data-toggle="buttons"
   >
-    <input type="radio" name="options" id="option2" />3 DAYS
-  </label>
+    <label
+      class="btn btn-secondary"
+      [ngClass]="{
+        active: currentPeriod == SearchPeriod.today,
+        disabled: searchBox.value === ''
+      }"
+      (click)="onSearch(searchBox.value, SearchPeriod.today)"
+    >
+      <input type="radio" name="options" id="option1" />TODAY
+    </label>
 
-  <label
-    class="btn btn-secondary"
-    [ngClass]="{ active: currentPeriod == '5', disabled: searchBox.value === '' }"
-    (click)="onSearchDays(searchBox.value, 5)"
-  >
-    <input type="radio" name="options" id="option3" />5 DAYS
-  </label>
+    <label
+      class="btn btn-secondary"
+      [ngClass]="{
+        active: currentPeriod == SearchPeriod.treeDays,
+        disabled: searchBox.value === ''
+      }"
+      (click)="onSearch(searchBox.value, SearchPeriod.treeDays)"
+    >
+      <input type="radio" name="options" id="option2" />3 DAYS
+    </label>
+
+    <label
+      class="btn btn-secondary"
+      [ngClass]="{
+        active: currentPeriod == SearchPeriod.fiveDays,
+        disabled: searchBox.value === ''
+      }"
+      (click)="onSearch(searchBox.value, SearchPeriod.fiveDays)"
+    >
+      <input type="radio" name="options" id="option3" />5 DAYS
+    </label>
+  </div>
 </div>

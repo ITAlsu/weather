@@ -1,6 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
-import { WeatherItem } from '../../models/weather-item/weather-item';
-import { WeatherService } from '../../services/weather.service';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { SearchPeriod } from './search-period';
 
 @Component({
   selector: 'app-search-city',
@@ -8,23 +7,16 @@ import { WeatherService } from '../../services/weather.service';
   styleUrls: ['./search-city.component.css']
 })
 export class SearchCityComponent implements OnInit {
-  weatherItems: WeatherItem;
   @Input() cityName: string;
-  @Input() currentPeriod: string;
-  @Output() searchedCity = new EventEmitter<string>();
-  @Output() searchedDays = new EventEmitter<any>();
+  @Input() currentPeriod: number;
+  @Output() searched = new EventEmitter<any>();
+  SearchPeriod = SearchPeriod;
 
-  constructor(private weatherService: WeatherService) {}
+  constructor() {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  onSearch(city: string, days: number = 1) {
+    this.searched.emit({ city, days });
   }
-
-  onSearchCity(city: string) {
-    this.searchedCity.emit(city);
-  }
-
-  onSearchDays(city: string, days: number) {
-    this.searchedDays.emit({ city, days });
-  }
-
 }
