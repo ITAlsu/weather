@@ -35,7 +35,8 @@ export class WeatherComponent implements OnInit {
   }
 
   getCurrentPeriod(): number {
-    return this.weatherItems !== undefined
+    return this.weatherItems !== undefined &&
+      this.weatherItems.days !== undefined
       ? this.weatherItems.days / FORECAST
       : 1;
   }
