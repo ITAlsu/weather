@@ -10,7 +10,7 @@
       #searchBox
       [ngModel]="cityName"
       id="search-box"
-      (keyup.enter)="onSearch(searchBox.value)"
+      (keyup.enter)="onSearch(searchBox.value, currentPeriod)"
     />
     <div class="input-group-btn">
       <button
