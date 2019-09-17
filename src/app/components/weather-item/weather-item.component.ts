@@ -11,6 +11,8 @@ export class WeatherItemComponent implements OnInit {
   @Input() weatherItem: WeatherData;
   imgSrc = '';
   ngOnInit() {
+    if (this.weatherItem) {
     this.imgSrc = API_IMG.replace('$', this.weatherItem.icon);
+    }
   }
 }

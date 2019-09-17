@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchHistoryComponent } from './search-history.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('SearchHistoryComponent', () => {
   let component: SearchHistoryComponent;
@@ -8,7 +9,8 @@ describe('SearchHistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchHistoryComponent ]
+      declarations: [ SearchHistoryComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));
