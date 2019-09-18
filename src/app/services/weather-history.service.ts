@@ -6,7 +6,7 @@ import { MAX_HISTORY } from '../store/app-config';
   providedIn: 'root'
 })
 export class WeatherHistoryService {
-  private historyItems: SearchItem[];
+  historyItems: SearchItem[];
 
   constructor() {}
 

@@ -46,6 +46,9 @@ export class WeatherComponent implements OnInit {
       .getWeatherItemsByCityName(searchItem.city, searchItem.days)
       .toPromise()
       .then(data => {
+        this.weatherHistoryService.addSearchHistoryItem(
+          new SearchItem(data.city.id, searchItem.city, searchItem.days)
+        );
         return (this.weatherItems = data);
       });
 

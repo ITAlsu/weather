@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { SearchItem } from '../models/search-item/search-item';
-import { WeatherHistoryService } from './weather-history.service';
 import { API_ENDPOINT, KEY, FORECAST } from '../store/app-config';
 
 @Injectable({
@@ -12,8 +10,7 @@ import { API_ENDPOINT, KEY, FORECAST } from '../store/app-config';
 })
 export class WeatherService {
   constructor(
-    private http: HttpClient,
-    private weatherHistoryService: WeatherHistoryService
+    private http: HttpClient
   ) {}
 
   getWeatherItemsByCityName(cityName: string, days = 1): Observable<any> {
@@ -28,9 +25,6 @@ export class WeatherService {
       )
       .pipe(
         map(data => {
-          this.weatherHistoryService.addSearchHistoryItem(
-            new SearchItem(data.city.id, data.city.name, days)
-          );
           return new WeatherItem(
             data.city.id,
             data.city.name,
