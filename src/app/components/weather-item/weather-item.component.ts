@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { WeatherData } from '../../models/weather-data/weather-data';
-import { API_IMG } from '../../store/app-config';
+import { WeatherData } from '@models/weather-data/weather-data';
+import { API_IMG } from '@store/app-config';
+
 
 @Component({
   selector: 'app-weather-item',

@@ -1,5 +1,5 @@
 import { WeatherHistoryService } from './weather-history.service';
-import { SearchItem } from '../models/search-item/search-item';
+import { SearchItem } from '@models/search-item/search-item';
 
 describe('WeatherHistoryService', () => {
   let service: WeatherHistoryService;

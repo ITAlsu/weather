@@ -1,9 +1,9 @@
-import { WeatherItem } from '../models/weather-item/weather-item';
+import { WeatherItem } from '@models/weather-item/weather-item';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { API_ENDPOINT, KEY, FORECAST } from '../store/app-config';
+import { API_ENDPOINT, KEY, FORECAST } from '@store/app-config';
 
 @Injectable({
   providedIn: 'root'
