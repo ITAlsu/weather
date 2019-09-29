@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { WeatherItem } from '../../models/weather-item/weather-item';
-import { WeatherService } from '../../services/weather.service';
-import { SearchItem } from 'src/app/models/search-item/search-item';
-import { WeatherHistoryService } from 'src/app/services/weather-history.service';
-import { FORECAST } from 'src/app/store/app-config';
+import { WeatherItem } from '@models/weather-item/weather-item';
+import { WeatherService } from '@services/weather.service';
+import { SearchItem } from '@models/search-item/search-item';
+import { WeatherHistoryService } from '@services/weather-history.service';
+import { FORECAST } from '@store/app-config';
 
 @Component({
   selector: 'app-weather',
@@ -28,30 +28,33 @@ export class WeatherComponent implements OnInit {
 
   checkIfDataFound(): boolean {
     return (
-      this.weatherItems !== undefined &&
-      this.weatherItems.weatherData !== undefined &&
-      this.weatherItems.weatherData.length !== 0
+      this.weatherItems &&
+      this.weatherItems.weatherData &&
+      this.weatherItems.weatherData.length > 0
     );
   }
 
   getCurrentPeriod(): number {
-    return this.weatherItems !== undefined &&
-      this.weatherItems.days !== undefined
+    return this.weatherItems &&
+      this.weatherItems.days
       ? this.weatherItems.days / FORECAST
       : 1;
   }
 
   async onSearched(searchItem: SearchItem) {
-    await this.weatherService
-      .getWeatherItemsByCityName(searchItem.city, searchItem.days)
-      .toPromise()
-      .then(data => {
-        this.weatherHistoryService.addSearchHistoryItem(
-          new SearchItem(data.city.id, searchItem.city, searchItem.days)
-        );
-        return (this.weatherItems = data);
-      });
-
+    if (searchItem.city.trim() === '') {
+      this.weatherItems = undefined;
+    } else {
+      await this.weatherService
+        .getWeatherItemsByCityName(searchItem.city, searchItem.days)
+        .toPromise()
+        .then(data => {
+          this.weatherHistoryService.addSearchHistoryItem(
+            new SearchItem(searchItem.id, searchItem.city, searchItem.days)
+          );
+          return (this.weatherItems = data);
+        });
+    }
     this.currentPeriod = this.getCurrentPeriod();
     this.showItems = this.checkIfDataFound();
   }

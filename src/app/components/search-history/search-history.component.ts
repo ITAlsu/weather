@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { SearchItem } from '../../models/search-item/search-item';
+import { SearchItem } from '@models/search-item/search-item';
 
 @Component({
   selector: 'app-search-history',

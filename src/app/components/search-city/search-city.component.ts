@@ -17,8 +17,6 @@ export class SearchCityComponent implements OnInit {
   ngOnInit() {}
 
   onSearch(city: string, days: number ) {
-    if (city.trim() !== '') {
-      this.searched.emit({ city, days });
-    }
+    this.searched.emit({ city, days });
   }
 }
